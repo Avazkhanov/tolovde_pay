@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:tolovde_pay/screens/auth/sign_up.dart';
 import 'package:tolovde_pay/screens/auth/login.dart';
@@ -44,7 +45,7 @@ class AppRoutes {
   }
 
   static navigate(Widget widget) {
-    return MaterialPageRoute(builder: (context) => widget);
+    return CupertinoPageRoute(builder: (context) => widget);
   }
 }
 
