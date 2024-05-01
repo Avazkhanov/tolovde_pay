@@ -57,7 +57,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
       emit(AuthLoadState(isLoad: true));
       NetworkResponse networkResponse =
       await AuthRepository().signIn(event.email, event.password);
-      if (networkResponse.errorText == null) {
+      if (networkResponse.errorText.isEmpty) {
         emit(AuthSuccessState(networkResponse.data));
       } else {
         emit(AuthErrorState(networkResponse.errorText.toString()));
@@ -71,7 +71,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
     try {
       emit(AuthLoadState(isLoad: true));
       NetworkResponse networkResponse = await AuthRepository().logOut();
-      if (networkResponse.errorText != null) {
+      if (networkResponse.errorText.isEmpty) {
         emit(AuthSuccessState(networkResponse.data));
       } else {
         emit(AuthErrorState(networkResponse.errorText.toString()));
