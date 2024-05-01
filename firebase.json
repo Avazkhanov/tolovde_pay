@@ -1,0 +1,1 @@
+{"flutter":{"platforms":{"android":{"default":{"projectId":"tolovde-pay","appId":"1:95223208348:android:38f851c8436c78f4491059","fileOutput":"android/app/google-services.json"}},"dart":{"lib/firebase_options.dart":{"projectId":"tolovde-pay","configurations":{"android":"1:95223208348:android:38f851c8436c78f4491059","ios":"1:95223208348:ios:32eb8e3a784f55e2491059"}}}}}}
