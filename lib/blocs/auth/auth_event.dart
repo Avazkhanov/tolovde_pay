@@ -15,11 +15,6 @@ class RegisterEvent extends AuthEvent{
   ];
 }
 
-class LoginWithGoogle extends AuthEvent{
-  @override
-  List<Object?> get props => throw UnimplementedError();
-}
-
 class LoginEvent extends AuthEvent{
 
   final String email;
@@ -34,9 +29,15 @@ class LoginEvent extends AuthEvent{
 
 
 }
-class LogOutEvent extends AuthEvent{
 
-  LogOutEvent();
+class LoginWithGoogle extends AuthEvent{
+
+
+   @override
+  List<Object?> get props => [];
+}
+
+class LogOutEvent extends AuthEvent{
 
   @override
   List<Object?> get props => [];
