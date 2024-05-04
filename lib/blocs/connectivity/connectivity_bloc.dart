@@ -1,9 +1,9 @@
+
 import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:tolovde_pay/blocs/connectivity/connectivity_event.dart';
 import 'package:tolovde_pay/blocs/connectivity/connectivity_state.dart';
-
 
 class ConnectivityBloc extends Bloc<ConnectivityEvent, ConnectivityState> {
   ConnectivityBloc()

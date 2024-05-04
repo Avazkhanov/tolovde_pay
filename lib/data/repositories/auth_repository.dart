@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:tolovde_pay/data/network/firebase_auth_service.dart';
 import 'package:tolovde_pay/data/network/response.dart';
 
@@ -10,5 +11,5 @@ class AuthRepository {
 
 
 
-  logOut() => FirebaseAuthService().signOut();
+  logOut() => FirebaseAuth.instance.signOut();
 }

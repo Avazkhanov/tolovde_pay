@@ -4,6 +4,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:tolovde_pay/blocs/auth/auth_bloc.dart';
+import 'package:tolovde_pay/blocs/user_bloc/user_bloc.dart';
+import 'package:tolovde_pay/blocs/user_bloc/user_event.dart';
 import 'package:tolovde_pay/data/models/user_model.dart';
 import 'package:tolovde_pay/screens/dialogs/unical_dialog.dart';
 import 'package:tolovde_pay/screens/routes.dart';
@@ -26,6 +28,8 @@ class _SignUpScreenState extends State<SignUpScreen> {
   TextEditingController emailController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
   TextEditingController confirmController = TextEditingController();
+  TextEditingController lastNameController = TextEditingController();
+  TextEditingController phoneNumberController = TextEditingController();
 
   @override
   void dispose() {
@@ -33,6 +37,8 @@ class _SignUpScreenState extends State<SignUpScreen> {
     emailController.dispose();
     passwordController.dispose();
     confirmController.dispose();
+    lastNameController.dispose();
+    phoneNumberController.dispose();
     super.dispose();
   }
 
@@ -109,7 +115,17 @@ class _SignUpScreenState extends State<SignUpScreen> {
                     MyTextFieldWidget(
                       keyBoardType: TextInputType.text,
                       controller: nameController,
-                      hintText: "Name",
+                      hintText: "First Name",
+                    ),
+                    MyTextFieldWidget(
+                      keyBoardType: TextInputType.text,
+                      controller: lastNameController,
+                      hintText: "Last Name",
+                    ),
+                    MyTextFieldWidget(
+                      keyBoardType: TextInputType.phone,
+                      controller: phoneNumberController,
+                      hintText: "Phone Number",
                     ),
                     MyTextFieldWidget(
                       regExp: AppValidates.emailExp,
@@ -143,15 +159,19 @@ class _SignUpScreenState extends State<SignUpScreen> {
                           text: "Register",
                           onTap: () {
                             context.read<AuthBloc>().add(
-                                  RegisterEvent(
-                                    UserModel(
-                                      email: emailController.text,
-                                      name: nameController.text,
-                                      password: passwordController.text,
-                                    ),
-                                    confirmController.text,
-                                  ),
-                                );
+                              RegisterEvent(
+                                UserModel(
+                                    imageUrl: '',
+                                    email: emailController.text,
+                                    userName: nameController.text,
+                                    lastName: lastNameController.text,
+                                    password: passwordController.text,
+                                    phoneNumber: phoneNumberController.text,
+                                    uuId: '',
+                                    userId: ''),
+                                confirmController.text,
+                              ),
+                            );
                           },
                         ),
                       ),
@@ -186,11 +206,25 @@ class _SignUpScreenState extends State<SignUpScreen> {
           },
           listener: (BuildContext context, AuthState state) {
             if (state is AuthErrorState) {
-             showUnicalDialog(errorMessage: state.errorText);
+              showUnicalDialog(errorMessage: state.errorText);
             }
 
             if (state is AuthSuccessState) {
-              Navigator.pushReplacementNamed(context, RouteNames.tabRoute);
+              context.read<UserProfileBloc>().add(
+                AddUserProfileEvent(
+                  userModel: UserModel(
+                    imageUrl: '',
+                    email: emailController.text,
+                    userName: nameController.text,
+                    lastName: lastNameController.text,
+                    password: passwordController.text,
+                    phoneNumber: phoneNumberController.text,
+                    uuId: '',
+                    userId: '',
+                  ),
+                ),
+              );
+              Navigator.pushReplacementNamed(context, RouteNames.setPinRoute);
             }
           },
           buildWhen: (last, current) {

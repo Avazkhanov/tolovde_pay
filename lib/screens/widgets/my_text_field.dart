@@ -37,7 +37,7 @@ class _MyTextFieldWidgetState extends State<MyTextFieldWidget> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: EdgeInsets.symmetric(vertical: 10.h),
+      margin: EdgeInsets.symmetric(vertical: 5.h),
       // padding: EdgeInsets.symmetric(vertical: 5.w),
       child: TextFormField(
         autovalidateMode: AutovalidateMode.onUserInteraction,

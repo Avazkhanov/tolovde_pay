@@ -32,7 +32,7 @@ class _SplashScreenState extends State<SplashScreen> {
         Navigator.pushReplacementNamed(context, RouteNames.onBoardingRoute);
       }
     } else {
-      Navigator.pushReplacementNamed(context, RouteNames.tabRoute);
+      Navigator.pushReplacementNamed(context, RouteNames.entryPinRoute);
     }
   }
 

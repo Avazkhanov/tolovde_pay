@@ -3,6 +3,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:tolovde_pay/blocs/bottom/bottom_bloc.dart';
 import 'package:tolovde_pay/blocs/bottom/bottom_event.dart';
 import 'package:tolovde_pay/blocs/bottom/bottom_state.dart';
+import 'package:tolovde_pay/blocs/user_bloc/user_bloc.dart';
+import 'package:tolovde_pay/blocs/user_bloc/user_event.dart';
 import 'package:tolovde_pay/screens/tab/card/card_screen.dart';
 import 'package:tolovde_pay/screens/tab/history/history_screen.dart';
 import 'package:tolovde_pay/screens/tab/home/home_screen.dart';
@@ -24,6 +26,7 @@ class _TabScreenState extends State<TabScreen> {
       const HistoryScreen(),
       const ProfileScreen(),
     ];
+    context.read<UserProfileBloc>().add(GetUserProfileByUuIdEvent());
     return Scaffold(
       body: BlocBuilder<BottomBloc, ChangeIndexState>(
         builder: (context, state) {

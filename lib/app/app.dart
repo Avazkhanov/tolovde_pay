@@ -4,7 +4,9 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:tolovde_pay/blocs/auth/auth_bloc.dart';
 import 'package:tolovde_pay/blocs/bottom/bottom_bloc.dart';
+import 'package:tolovde_pay/blocs/user_bloc/user_bloc.dart';
 import 'package:tolovde_pay/data/repositories/auth_repository.dart';
+import 'package:tolovde_pay/data/repositories/user_repository.dart';
 import 'package:tolovde_pay/screens/routes.dart';
 import 'package:tolovde_pay/services/local_notification_service.dart';
 import 'package:tolovde_pay/utils/app_theme/app_theme.dart';
@@ -19,11 +21,15 @@ class App extends StatelessWidget {
     LocalNotificationService.localNotificationService.init(navigatorKey);
 
     return MultiRepositoryProvider(
-      providers: [RepositoryProvider(create: (_) => AuthRepository())],
+      providers: [
+        RepositoryProvider(create: (_) => AuthRepository()),
+        RepositoryProvider(create: (_) => UserRepository()),
+      ],
       child: MultiBlocProvider(
         providers: [
           BlocProvider(create: (context) => AuthBloc()),
           BlocProvider(create: (context) => BottomBloc()),
+          BlocProvider(create: (context) => UserProfileBloc(context.read<UserRepository>())),
         ],
         child: ScreenUtilInit(
           designSize: const Size(430, 930),

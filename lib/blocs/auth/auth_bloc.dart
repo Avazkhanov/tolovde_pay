@@ -12,18 +12,18 @@ part 'auth_state.dart';
 
 class AuthBloc extends Bloc<AuthEvent, AuthState> {
   AuthBloc() : super(AuthInitial()) {
-    on<RegisterEvent>(_registerUser);
+    on<RegisterEvent>(_register);
 
-    on<LoginEvent>(_loginUser);
+    on<LoginEvent>(_login);
 
     on<LogOutEvent>(_logOut);
 
     on<LoginWithGoogle>(_loginWithGoogle);
   }
 
-  _registerUser(RegisterEvent event, emit) async {
-    if (event.userModel.name.isEmpty) {
-      emit(AuthErrorState("Siz ismni kiritmadingiz"));
+  _register(RegisterEvent event, emit) async {
+    if (event.userModel.userName.isEmpty) {
+      emit(AuthErrorState("Siz isimni kiritmadingiz"));
       return;
     } else if (event.userModel.email.isEmpty) {
       emit(AuthErrorState("Siz emailni kiritmadingiz"));
@@ -32,7 +32,6 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
       emit(AuthErrorState("Parolni tasdiqlang"));
       return;
     }
-
     try {
       if (event.userModel.password == event.confirmPassword) {
         emit(AuthLoadState(isLoad: true));
@@ -44,7 +43,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
           emit(AuthErrorState(networkResponse.errorText.toString()));
         }
       } else {
-        emit(AuthErrorState("Parollar mos emas"));
+        emit(AuthErrorState("Sizning parolingiz mos kelmadi"));
         return;
       }
     } catch (e) {
@@ -52,7 +51,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
     }
   }
 
-  _loginUser(LoginEvent event, emit) async {
+  _login(LoginEvent event, emit) async {
     try {
       emit(AuthLoadState(isLoad: true));
       NetworkResponse networkResponse =
@@ -65,12 +64,6 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
     } catch (e) {
       emit(AuthErrorState('$e'));
     }
-  }
-
-  _logOut(LogOutEvent event, emit) async {
-    emit(AuthLoadState(isLoad: true));
-    NetworkResponse networkResponse = await AuthRepository().logOut();
-    emit(AuthSuccessState(networkResponse.data));
   }
 
   _loginWithGoogle(LoginWithGoogle event, emit) async {
@@ -89,5 +82,12 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
     } catch (e) {
       emit(AuthErrorState('$e'));
     }
+  }
+
+  _logOut(LogOutEvent event, emit) async {
+    emit(AuthLoadState(isLoad: true));
+    await AuthRepository().logOut();
+    NetworkResponse networkResponse = NetworkResponse(data: UserCredential);
+    emit(AuthSuccessState(networkResponse.data));
   }
 }

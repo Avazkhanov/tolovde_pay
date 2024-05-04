@@ -1,11 +1,18 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:tolovde_pay/data/models/user_model.dart';
 import 'package:tolovde_pay/screens/auth/sign_up.dart';
 import 'package:tolovde_pay/screens/auth/login.dart';
+import 'package:tolovde_pay/screens/local_auth/biometrics/touch_id_screen.dart';
+import 'package:tolovde_pay/screens/local_auth/password/confirm_pin_screen.dart';
+import 'package:tolovde_pay/screens/local_auth/password/entry_pin_screen.dart';
+import 'package:tolovde_pay/screens/local_auth/password/set_pin_screen.dart';
+
 import 'package:tolovde_pay/screens/no_internet/no_internet_screen.dart';
 import 'package:tolovde_pay/screens/on_boarding/on_boarding_screen.dart';
 import 'package:tolovde_pay/screens/payment/payment_screen.dart';
 import 'package:tolovde_pay/screens/splash/splash_screen.dart';
+import 'package:tolovde_pay/screens/tab/profile/user_update_screen.dart';
 import 'package:tolovde_pay/screens/tab/tab_screen.dart';
 import 'package:tolovde_pay/screens/transfer/transfer_screen.dart';
 
@@ -32,6 +39,18 @@ class AppRoutes {
         return navigate(const SignUpScreen());
       case RouteNames.onBoardingRoute:
         return navigate(const OnBoardingScreen());
+      case RouteNames.setPinRoute:
+        return navigate(const SetPinScreen());
+      case RouteNames.confirmPinRoute:
+        return navigate(
+            ConfirmPinScreen(previousPin: settings.arguments as String));
+      case RouteNames.entryPinRoute:
+        return navigate(const EntryPinScreen());
+      case RouteNames.touchIdRoute:
+        return navigate(const TouchIdScreen());
+      case RouteNames.updateUserRoute:
+        return navigate(
+            UserUpdateScreen(userModel: settings.arguments as UserModel));
 
       default:
         return navigate(
@@ -58,4 +77,9 @@ class RouteNames {
   static const String paymentRoute = "/payment_route";
   static const String transferRoute = "/transfer_route";
   static const String onBoardingRoute = "/on_boarding_route";
+  static const String setPinRoute = "/setPinRoute";
+  static const String confirmPinRoute = "/confirmPinRoute";
+  static const String entryPinRoute = "/entryPinRoute";
+  static const String touchIdRoute = "/touchIdRoute";
+  static const String updateUserRoute = "/updateUserRoute";
 }

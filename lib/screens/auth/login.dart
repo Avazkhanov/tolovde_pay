@@ -3,6 +3,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:tolovde_pay/blocs/auth/auth_bloc.dart';
+import 'package:tolovde_pay/blocs/user_bloc/user_bloc.dart';
+import 'package:tolovde_pay/blocs/user_bloc/user_event.dart';
 import 'package:tolovde_pay/screens/dialogs/unical_dialog.dart';
 import 'package:tolovde_pay/screens/routes.dart';
 import 'package:tolovde_pay/screens/widgets/my_text_field.dart';
@@ -160,7 +162,8 @@ class _LoginScreenState extends State<LoginScreen> {
             }
 
             if (state is AuthSuccessState) {
-              Navigator.pushReplacementNamed(context, RouteNames.tabRoute);
+              context.read<UserProfileBloc>().add(GetUserProfileByUuIdEvent());
+              Navigator.pushReplacementNamed(context, RouteNames.setPinRoute);
             }
           },
           listenWhen: (last, current) {
