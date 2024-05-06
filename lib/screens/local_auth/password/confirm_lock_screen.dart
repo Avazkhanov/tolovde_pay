@@ -10,16 +10,16 @@ import 'package:tolovde_pay/utils/styles/app_text_style.dart';
 
 import 'widgets/pin_put_view.dart';
 
-class ConfirmPinScreen extends StatefulWidget {
-  const ConfirmPinScreen({super.key, required this.previousPin});
+class ConfirmLockScreen extends StatefulWidget {
+  const ConfirmLockScreen({super.key, required this.previousPin});
 
   final String previousPin;
 
   @override
-  State<ConfirmPinScreen> createState() => _ConfirmPinScreenState();
+  State<ConfirmLockScreen> createState() => _ConfirmLockScreenState();
 }
 
-class _ConfirmPinScreenState extends State<ConfirmPinScreen> {
+class _ConfirmLockScreenState extends State<ConfirmLockScreen> {
   final TextEditingController pinPutController = TextEditingController();
 
   final FocusNode focusNode = FocusNode();

@@ -11,14 +11,14 @@ import 'package:tolovde_pay/screens/routes.dart';
 import 'package:tolovde_pay/services/biometric_auth_service.dart';
 import 'package:tolovde_pay/utils/styles/app_text_style.dart';
 
-class EntryPinScreen extends StatefulWidget {
-  const EntryPinScreen({super.key});
+class LockScreen extends StatefulWidget {
+  const LockScreen({super.key});
 
   @override
-  State<EntryPinScreen> createState() => _EntryPinScreenState();
+  State<LockScreen> createState() => _LockScreenState();
 }
 
-class _EntryPinScreenState extends State<EntryPinScreen> {
+class _LockScreenState extends State<LockScreen> {
   final TextEditingController pinPutController = TextEditingController();
 
   final FocusNode focusNode = FocusNode();

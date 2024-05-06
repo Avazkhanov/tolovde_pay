@@ -8,14 +8,14 @@ import 'package:tolovde_pay/screens/local_auth/password/widgets/pin_put_view.dar
 import 'package:tolovde_pay/screens/routes.dart';
 import 'package:tolovde_pay/utils/styles/app_text_style.dart';
 
-class SetPinScreen extends StatefulWidget {
-  const SetPinScreen({super.key});
+class InitialLockScreen extends StatefulWidget {
+  const InitialLockScreen({super.key});
 
   @override
-  State<SetPinScreen> createState() => _SetPinScreenState();
+  State<InitialLockScreen> createState() => _InitialLockScreenState();
 }
 
-class _SetPinScreenState extends State<SetPinScreen> {
+class _InitialLockScreenState extends State<InitialLockScreen> {
   final TextEditingController pinPutController = TextEditingController();
 
   final FocusNode focusNode = FocusNode();

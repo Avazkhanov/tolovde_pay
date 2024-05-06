@@ -4,9 +4,9 @@ import 'package:tolovde_pay/data/models/user_model.dart';
 import 'package:tolovde_pay/screens/auth/sign_up.dart';
 import 'package:tolovde_pay/screens/auth/login.dart';
 import 'package:tolovde_pay/screens/local_auth/biometrics/touch_id_screen.dart';
-import 'package:tolovde_pay/screens/local_auth/password/confirm_pin_screen.dart';
-import 'package:tolovde_pay/screens/local_auth/password/entry_pin_screen.dart';
-import 'package:tolovde_pay/screens/local_auth/password/set_pin_screen.dart';
+import 'package:tolovde_pay/screens/local_auth/password/confirm_lock_screen.dart';
+import 'package:tolovde_pay/screens/local_auth/password/lock_screen.dart';
+import 'package:tolovde_pay/screens/local_auth/password/initial_lock_screen.dart';
 
 import 'package:tolovde_pay/screens/no_internet/no_internet_screen.dart';
 import 'package:tolovde_pay/screens/on_boarding/on_boarding_screen.dart';
@@ -40,12 +40,12 @@ class AppRoutes {
       case RouteNames.onBoardingRoute:
         return navigate(const OnBoardingScreen());
       case RouteNames.setPinRoute:
-        return navigate(const SetPinScreen());
+        return navigate(const InitialLockScreen());
       case RouteNames.confirmPinRoute:
         return navigate(
-            ConfirmPinScreen(previousPin: settings.arguments as String));
+            ConfirmLockScreen(previousPin: settings.arguments as String));
       case RouteNames.entryPinRoute:
-        return navigate(const EntryPinScreen());
+        return navigate(const LockScreen());
       case RouteNames.touchIdRoute:
         return navigate(const TouchIdScreen());
       case RouteNames.updateUserRoute:

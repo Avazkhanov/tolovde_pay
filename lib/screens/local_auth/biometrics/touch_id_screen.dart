@@ -40,7 +40,7 @@ class _TouchIdScreenState extends State<TouchIdScreen> {
           ),
           const Spacer(),
           MyCustomButton(
-            onTap: enableBiometrics,
+            onTap: checkBiometrics,
             title: "Biometrics Auth",
           ),
           MyCustomButton(
@@ -58,7 +58,7 @@ class _TouchIdScreenState extends State<TouchIdScreen> {
     );
   }
 
-  Future<void> enableBiometrics() async {
+  Future<void> checkBiometrics() async {
     bool authenticated = await BiometricAuthService.authenticate();
     if (authenticated) {
       await StorageRepository.setBool(
