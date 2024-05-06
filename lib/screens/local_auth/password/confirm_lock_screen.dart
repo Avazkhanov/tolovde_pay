@@ -13,6 +13,7 @@ import 'widgets/pin_put_view.dart';
 class ConfirmLockScreen extends StatefulWidget {
   const ConfirmLockScreen({super.key, required this.previousPin});
 
+
   final String previousPin;
 
   @override
