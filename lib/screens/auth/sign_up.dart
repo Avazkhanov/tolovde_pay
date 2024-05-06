@@ -12,6 +12,7 @@ import 'package:tolovde_pay/screens/routes.dart';
 import 'package:tolovde_pay/screens/widgets/my_text_field.dart';
 import 'package:tolovde_pay/screens/widgets/rounded_button.dart';
 import 'package:tolovde_pay/utils/colors/app_colors.dart';
+import 'package:tolovde_pay/utils/formaters/formatters.dart';
 import 'package:tolovde_pay/utils/images/app_images.dart';
 import 'package:tolovde_pay/utils/styles/app_text_style.dart';
 import 'package:tolovde_pay/utils/validates/app_validates.dart';
@@ -124,6 +125,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                     ),
                     MyTextFieldWidget(
                       keyBoardType: TextInputType.phone,
+                      maskTextInputFormatter: AppInputFormatters.phoneFormatter,
                       controller: phoneNumberController,
                       hintText: "Phone Number",
                     ),

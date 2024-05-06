@@ -8,6 +8,7 @@ import 'package:tolovde_pay/blocs/user_bloc/user_bloc.dart';
 import 'package:tolovde_pay/blocs/user_bloc/user_event.dart';
 import 'package:tolovde_pay/screens/widgets/button_container.dart';
 import 'package:tolovde_pay/screens/widgets/my_text_field.dart';
+import 'package:tolovde_pay/utils/formaters/formatters.dart';
 import 'package:tolovde_pay/utils/validates/app_validates.dart';
 
 import '../../../../data/models/user_model.dart';
@@ -80,7 +81,8 @@ class _UserUpdateScreenState extends State<UserUpdateScreen> {
                 controller: firstNameController,
               ),
               MyTextFieldWidget(
-                keyBoardType: TextInputType.text,
+                keyBoardType: TextInputType.phone,
+                maskTextInputFormatter: AppInputFormatters.phoneFormatter,
                 hintText: "Phone Number",
                 controller: phoneNumberController,
               ),

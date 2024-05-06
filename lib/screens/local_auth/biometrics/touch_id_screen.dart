@@ -1,4 +1,6 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:tolovde_pay/data/local/storage_repository.dart';
 import 'package:tolovde_pay/screens/dialogs/unical_dialog.dart';
 import 'package:tolovde_pay/screens/routes.dart';
@@ -17,28 +19,26 @@ class _TouchIdScreenState extends State<TouchIdScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text("Touch ID Route"),
-      ),
       body: Column(
-        mainAxisAlignment: MainAxisAlignment.end,
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
-          const Row(
+          SizedBox(height: 200.h),
+           Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Icon(
                 Icons.fingerprint,
-                size: 150,
+                size: 150.sp,
                 color: Colors.blue,
               ),
               Icon(
-                Icons.face,
-                size: 150,
+                CupertinoIcons.eye_fill,
+                size: 150.sp,
                 color: Colors.blue,
               ),
             ],
           ),
+          const Spacer(),
           MyCustomButton(
             onTap: enableBiometrics,
             title: "Biometrics Auth",

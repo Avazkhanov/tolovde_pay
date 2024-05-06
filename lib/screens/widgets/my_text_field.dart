@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
 import 'package:tolovde_pay/utils/colors/app_colors.dart';
 
 class MyTextFieldWidget extends StatefulWidget {
@@ -11,6 +12,7 @@ class MyTextFieldWidget extends StatefulWidget {
   final TextInputType keyBoardType;
   final Widget? suffixIcon;
   final bool isObscureText;
+  final MaskTextInputFormatter? maskTextInputFormatter;
   final FocusNode? focusNode;
   final Widget? prefixIcon;
 
@@ -22,6 +24,7 @@ class MyTextFieldWidget extends StatefulWidget {
     this.suffixIcon = const SizedBox(),
     this.isObscureText = false,
     this.focusNode,
+    this.maskTextInputFormatter,
     this.regExp,
     this.prefixIcon,
     this.errorText = '',
@@ -41,6 +44,9 @@ class _MyTextFieldWidgetState extends State<MyTextFieldWidget> {
       // padding: EdgeInsets.symmetric(vertical: 5.w),
       child: TextFormField(
         autovalidateMode: AutovalidateMode.onUserInteraction,
+        inputFormatters: widget.maskTextInputFormatter != null
+            ? [widget.maskTextInputFormatter!]
+            : null,
         validator: widget.regExp != null
             ? (v) {
                 if (v != null && widget.regExp!.hasMatch(v)) {
