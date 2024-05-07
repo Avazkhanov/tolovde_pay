@@ -7,7 +7,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:tolovde_pay/blocs/user_bloc/user_bloc.dart';
 import 'package:tolovde_pay/blocs/user_bloc/user_event.dart';
 import 'package:tolovde_pay/screens/widgets/button_container.dart';
-import 'package:tolovde_pay/screens/widgets/my_text_field.dart';
+import 'package:tolovde_pay/screens/widgets/text_field_container.dart';
 import 'package:tolovde_pay/utils/formaters/formatters.dart';
 import 'package:tolovde_pay/utils/validates/app_validates.dart';
 
@@ -70,23 +70,23 @@ class _UserUpdateScreenState extends State<UserUpdateScreen> {
                 },
               ),
               SizedBox(height: 20.h),
-              MyTextFieldWidget(
+              TextFieldContainer(
                 hintText: "Last Name",
                 keyBoardType: TextInputType.text,
                 controller: lastNameController,
               ),
-              MyTextFieldWidget(
+              TextFieldContainer(
                 hintText: "First Name",
                 keyBoardType: TextInputType.text,
                 controller: firstNameController,
               ),
-              MyTextFieldWidget(
+              TextFieldContainer(
                 keyBoardType: TextInputType.phone,
                 maskTextInputFormatter: AppInputFormatters.phoneFormatter,
                 hintText: "Phone Number",
                 controller: phoneNumberController,
               ),
-              MyTextFieldWidget(
+              TextFieldContainer(
                 hintText: "Password",
                 keyBoardType: TextInputType.text,
                 controller: passwordController,

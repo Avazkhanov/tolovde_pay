@@ -85,9 +85,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
   }
 
   _logOut(LogOutEvent event, emit) async {
-    emit(AuthLoadState(isLoad: true));
     await AuthRepository().logOut();
     NetworkResponse networkResponse = NetworkResponse(data: UserCredential);
-    emit(AuthSuccessState(networkResponse.data));
   }
 }

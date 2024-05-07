@@ -1,7 +1,6 @@
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:tolovde_pay/data/models/user_model.dart';
 import 'package:tolovde_pay/data/network/response.dart';
 import 'package:tolovde_pay/utils/constants/app_constants.dart';
@@ -14,7 +13,6 @@ class UserRepository {
     User? user = FirebaseAuth.instance.currentUser;
     String uuId = "";
     if (user != null) {
-      debugPrint("UUID insertUser: ${user.uid}------");
       uuId = user.uid;
     }
 
@@ -50,9 +48,6 @@ class UserRepository {
           .collection(AppConstants.userTableName)
           .doc(userModel.userId)
           .update(userModel.toJson());
-
-      print("Update User ${userModel.userId} ------------- User ID");
-      print("Update User ${userModel.uuId} -------------  UUID");
     } on FirebaseException catch (_) {
       networkResponse.errorText =
       "Error :(  on FirebaseException catch (_) updateUser";

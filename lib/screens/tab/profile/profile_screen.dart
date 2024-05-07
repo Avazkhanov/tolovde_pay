@@ -7,7 +7,7 @@ import 'package:tolovde_pay/blocs/auth/auth_bloc.dart';
 import 'package:tolovde_pay/blocs/user_bloc/user_bloc.dart';
 import 'package:tolovde_pay/blocs/user_bloc/user_state.dart';
 import 'package:tolovde_pay/screens/routes.dart';
-import 'package:tolovde_pay/screens/widgets/my_custom_button.dart';
+import 'package:tolovde_pay/screens/widgets/button_container.dart';
 import 'package:tolovde_pay/utils/colors/app_colors.dart';
 import 'package:tolovde_pay/utils/styles/app_text_style.dart';
 
@@ -108,26 +108,20 @@ class _ProfileScreenState extends State<ProfileScreen> {
                   ),
                 ),
                 const Spacer(),
-                BlocConsumer<AuthBloc, AuthState>(
+                BlocBuilder<AuthBloc, AuthState>(
                   builder: (context, state) {
-                    return MyCustomButton(
+                    return ButtonContainer(
                       isLoading: isLoading,
                       title: "Log Out",
                       onTap: () {
                         context.read<AuthBloc>().add(LogOutEvent());
-                      },
-                      color: Colors.red,
+                        Navigator.pushReplacementNamed(context, RouteNames.splashScreen);
+                        },
+                      background: Colors.red,
                     );
                   },
-                  listener: (BuildContext context, AuthState state) {
-                    if(state is AuthLoadState){
-                      isLoading = true;
-                    }
-                    if(state is AuthSuccessState){
-                      Navigator.pushReplacementNamed(context, RouteNames.register);
-                    }
-                  },
                 ),
+                SizedBox(height: 10.h),
               ],
             ),
           );

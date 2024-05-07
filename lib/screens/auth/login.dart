@@ -7,7 +7,7 @@ import 'package:tolovde_pay/blocs/user_bloc/user_bloc.dart';
 import 'package:tolovde_pay/blocs/user_bloc/user_event.dart';
 import 'package:tolovde_pay/screens/dialogs/unical_dialog.dart';
 import 'package:tolovde_pay/screens/routes.dart';
-import 'package:tolovde_pay/screens/widgets/my_text_field.dart';
+import 'package:tolovde_pay/screens/widgets/text_field_container.dart';
 import 'package:tolovde_pay/screens/widgets/rounded_button.dart';
 import 'package:tolovde_pay/utils/colors/app_colors.dart';
 import 'package:tolovde_pay/utils/images/app_images.dart';
@@ -96,14 +96,14 @@ class _LoginScreenState extends State<LoginScreen> {
                         ),
                       ],
                     ),
-                    MyTextFieldWidget(
+                    TextFieldContainer(
                       regExp: AppValidates.emailExp,
                       errorText: "Gmailni to'g'ri kiriting",
                       keyBoardType: TextInputType.text,
                       controller: emailController,
                       hintText: "Email",
                     ),
-                    MyTextFieldWidget(
+                    TextFieldContainer(
                       isObscureText: true,
                       regExp: AppValidates.passwordExp,
                       errorText: "Parolni to'g'ri kiriting",

@@ -7,11 +7,11 @@ import 'package:tolovde_pay/screens/local_auth/biometrics/touch_id_screen.dart';
 import 'package:tolovde_pay/screens/local_auth/password/confirm_lock_screen.dart';
 import 'package:tolovde_pay/screens/local_auth/password/lock_screen.dart';
 import 'package:tolovde_pay/screens/local_auth/password/initial_lock_screen.dart';
-
 import 'package:tolovde_pay/screens/no_internet/no_internet_screen.dart';
 import 'package:tolovde_pay/screens/on_boarding/on_boarding_screen.dart';
 import 'package:tolovde_pay/screens/payment/payment_screen.dart';
 import 'package:tolovde_pay/screens/splash/splash_screen.dart';
+import 'package:tolovde_pay/screens/tab/card/add_card_screen.dart';
 import 'package:tolovde_pay/screens/tab/profile/user_update_screen.dart';
 import 'package:tolovde_pay/screens/tab/tab_screen.dart';
 import 'package:tolovde_pay/screens/transfer/transfer_screen.dart';
@@ -21,14 +21,11 @@ class AppRoutes {
     switch (settings.name) {
       case RouteNames.splashScreen:
         return navigate(const SplashScreen());
-
       case RouteNames.tabRoute:
         return navigate(const TabScreen());
-
       case RouteNames.noInternetRoute:
         return navigate(NoInternetScreen(
             onInternetComeBack: settings.arguments as VoidCallback));
-
       case RouteNames.transferRoute:
         return navigate(const TransferScreen());
       case RouteNames.loginScreen:
@@ -51,6 +48,8 @@ class AppRoutes {
       case RouteNames.updateUserRoute:
         return navigate(
             UserUpdateScreen(userModel: settings.arguments as UserModel));
+      case RouteNames.addCardRoute:
+        return navigate(const AddCardScreen());
 
       default:
         return navigate(
@@ -82,4 +81,5 @@ class RouteNames {
   static const String entryPinRoute = "/entryPinRoute";
   static const String touchIdRoute = "/touchIdRoute";
   static const String updateUserRoute = "/updateUserRoute";
+  static const String addCardRoute = "/addCardRoute";
 }

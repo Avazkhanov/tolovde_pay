@@ -18,6 +18,14 @@ class TabScreen extends StatefulWidget {
 }
 
 class _TabScreenState extends State<TabScreen> {
+
+  @override
+  void initState() {
+    debugPrint("Tab initga kirdi");
+    context.read<UserProfileBloc>().add(GetUserProfileByUuIdEvent());
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     List<Widget> screens = [
@@ -26,7 +34,6 @@ class _TabScreenState extends State<TabScreen> {
       const HistoryScreen(),
       const ProfileScreen(),
     ];
-    context.read<UserProfileBloc>().add(GetUserProfileByUuIdEvent());
     return Scaffold(
       body: BlocBuilder<BottomBloc, ChangeIndexState>(
         builder: (context, state) {

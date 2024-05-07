@@ -4,7 +4,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:tolovde_pay/data/local/storage_repository.dart';
 import 'package:tolovde_pay/screens/dialogs/unical_dialog.dart';
 import 'package:tolovde_pay/screens/routes.dart';
-import 'package:tolovde_pay/screens/widgets/my_custom_button.dart';
+import 'package:tolovde_pay/screens/widgets/button_container.dart';
 import 'package:tolovde_pay/services/biometric_auth_service.dart';
 
 
@@ -39,11 +39,11 @@ class _TouchIdScreenState extends State<TouchIdScreen> {
             ],
           ),
           const Spacer(),
-          MyCustomButton(
+          ButtonContainer(
             onTap: checkBiometrics,
             title: "Biometrics Auth",
           ),
-          MyCustomButton(
+          ButtonContainer(
             onTap: () {
               Navigator.pushNamedAndRemoveUntil(
                 context,

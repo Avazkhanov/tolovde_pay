@@ -9,7 +9,7 @@ import 'package:tolovde_pay/blocs/user_bloc/user_event.dart';
 import 'package:tolovde_pay/data/models/user_model.dart';
 import 'package:tolovde_pay/screens/dialogs/unical_dialog.dart';
 import 'package:tolovde_pay/screens/routes.dart';
-import 'package:tolovde_pay/screens/widgets/my_text_field.dart';
+import 'package:tolovde_pay/screens/widgets/text_field_container.dart';
 import 'package:tolovde_pay/screens/widgets/rounded_button.dart';
 import 'package:tolovde_pay/utils/colors/app_colors.dart';
 import 'package:tolovde_pay/utils/formaters/formatters.dart';
@@ -113,30 +113,30 @@ class _SignUpScreenState extends State<SignUpScreen> {
                         ),
                       ],
                     ),
-                    MyTextFieldWidget(
+                    TextFieldContainer(
                       keyBoardType: TextInputType.text,
                       controller: nameController,
                       hintText: "First Name",
                     ),
-                    MyTextFieldWidget(
+                    TextFieldContainer(
                       keyBoardType: TextInputType.text,
                       controller: lastNameController,
                       hintText: "Last Name",
                     ),
-                    MyTextFieldWidget(
+                    TextFieldContainer(
                       keyBoardType: TextInputType.phone,
                       maskTextInputFormatter: AppInputFormatters.phoneFormatter,
                       controller: phoneNumberController,
                       hintText: "Phone Number",
                     ),
-                    MyTextFieldWidget(
+                    TextFieldContainer(
                       regExp: AppValidates.emailExp,
                       errorText: "Gmailni to'g'ri kiriting",
                       keyBoardType: TextInputType.text,
                       controller: emailController,
                       hintText: "Email",
                     ),
-                    MyTextFieldWidget(
+                    TextFieldContainer(
                       regExp: AppValidates.passwordExp,
                       errorText: "Parolni to'g'ri kiriting",
                       isObscureText: true,
@@ -144,7 +144,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                       controller: passwordController,
                       hintText: "Password",
                     ),
-                    MyTextFieldWidget(
+                    TextFieldContainer(
                       regExp: AppValidates.passwordExp,
                       errorText: "Parolni to'g'ri kiriting",
                       isObscureText: true,
