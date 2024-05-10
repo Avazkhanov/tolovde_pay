@@ -13,6 +13,7 @@ class CardsBloc extends Bloc<CardsEvent, CardsState> {
           const CardsState(
             userCards: [],
             cardsDB: [],
+            activeCards: [],
             status: FormsStatus.pure,
             errorMessage: "",
             statusMessage: "",
@@ -93,4 +94,13 @@ class CardsBloc extends Bloc<CardsEvent, CardsState> {
       },
     );
   }
+  _listenActiveCard(GetActiveCards event, Emitter emit) async {
+    await emit.onEach(
+      cardsRepository.getActiveCards(),
+      onData: (List<CardModel> activeCards) {
+        emit(state.copyWith(activeCards: activeCards));
+      },
+    );
+  }
+
 }

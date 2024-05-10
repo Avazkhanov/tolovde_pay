@@ -3,8 +3,10 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:tolovde_pay/blocs/bottom/bottom_bloc.dart';
 import 'package:tolovde_pay/blocs/bottom/bottom_event.dart';
 import 'package:tolovde_pay/blocs/bottom/bottom_state.dart';
+import 'package:tolovde_pay/blocs/transaction/transaction_bloc.dart';
 import 'package:tolovde_pay/blocs/user_bloc/user_bloc.dart';
 import 'package:tolovde_pay/blocs/user_bloc/user_event.dart';
+import 'package:tolovde_pay/screens/routes.dart';
 import 'package:tolovde_pay/screens/tab/card/card_screen.dart';
 import 'package:tolovde_pay/screens/tab/history/history_screen.dart';
 import 'package:tolovde_pay/screens/tab/home/home_screen.dart';
@@ -18,7 +20,6 @@ class TabScreen extends StatefulWidget {
 }
 
 class _TabScreenState extends State<TabScreen> {
-
   @override
   void initState() {
     debugPrint("Tab initga kirdi");
@@ -42,6 +43,16 @@ class _TabScreenState extends State<TabScreen> {
             children: screens,
           );
         },
+      ),
+      floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          context.read<TransactionBloc>().add(SetInitialEvent());
+          Navigator.pushNamed(context, RouteNames.transferRoute);
+        },
+        shape: const CircleBorder(),
+        backgroundColor: Colors.blue,
+        child: const Icon(Icons.currency_exchange),
       ),
       bottomNavigationBar: BlocBuilder<BottomBloc, ChangeIndexState>(
         builder: (context, state) {

@@ -6,6 +6,10 @@ class AppImages {
   static const String onBoard3 = "assets/images/on_board2.png";
   static const String onBoard4 = "assets/images/on_board4.png";
   static const String googleIcon = "assets/icons/goole_icon.svg";
+  static const String uzCard = "assets/images/uzcard.png";
+  static const String humo = "assets/images/humo.png";
+  static const String visa = "assets/images/visa.png";
+  static const String chip = "assets/images/chip.png";
 
   //.svg
   static const String delete = "assets/icons/delete.svg";

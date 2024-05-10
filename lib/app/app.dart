@@ -6,6 +6,7 @@ import 'package:tolovde_pay/blocs/auth/auth_bloc.dart';
 import 'package:tolovde_pay/blocs/bottom/bottom_bloc.dart';
 import 'package:tolovde_pay/blocs/card/cards_bloc.dart';
 import 'package:tolovde_pay/blocs/card/cards_event.dart';
+import 'package:tolovde_pay/blocs/transaction/transaction_bloc.dart';
 import 'package:tolovde_pay/blocs/user_bloc/user_bloc.dart';
 import 'package:tolovde_pay/data/repositories/auth_repository.dart';
 import 'package:tolovde_pay/data/repositories/card_repository.dart';
@@ -33,8 +34,18 @@ class App extends StatelessWidget {
         providers: [
           BlocProvider(create: (context) => AuthBloc()),
           BlocProvider(create: (context) => BottomBloc()),
-          BlocProvider(create: (context) => UserProfileBloc(context.read<UserRepository>())),
-          BlocProvider(create: (context) => CardsBloc(cardsRepository: context.read<CardsRepository>())..add(GetAllCards())),
+          BlocProvider(
+              create: (context) =>
+                  UserProfileBloc(context.read<UserRepository>())),
+          BlocProvider(
+              create: (context) =>
+                  CardsBloc(cardsRepository: context.read<CardsRepository>())
+                    ..add(GetAllCards())),
+          BlocProvider(
+            create: (context) => TransactionBloc(
+              cardsRepository: context.read<CardsRepository>(),
+            ),
+          )
         ],
         child: ScreenUtilInit(
           designSize: const Size(430, 930),

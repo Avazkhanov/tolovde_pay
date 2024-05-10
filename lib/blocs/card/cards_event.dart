@@ -48,3 +48,7 @@ class GetAllCards extends CardsEvent {
   @override
   List<Object?> get props => [];
 }
+class GetActiveCards extends CardsEvent {
+  @override
+  List<Object?> get props => [];
+}
