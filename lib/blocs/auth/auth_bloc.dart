@@ -1,9 +1,10 @@
 import 'package:equatable/equatable.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:google_sign_in/google_sign_in.dart';
+import 'package:tolovde_pay/data/models/forms_status.dart';
+import 'package:tolovde_pay/data/models/network_response.dart';
 import 'package:tolovde_pay/data/models/user_model.dart';
-import 'package:tolovde_pay/data/network/response.dart';
 import 'package:tolovde_pay/data/repositories/auth_repository.dart';
 
 part 'auth_event.dart';
@@ -11,81 +12,126 @@ part 'auth_event.dart';
 part 'auth_state.dart';
 
 class AuthBloc extends Bloc<AuthEvent, AuthState> {
-  AuthBloc() : super(AuthInitial()) {
-    on<RegisterEvent>(_register);
-
-    on<LoginEvent>(_login);
-
-    on<LogOutEvent>(_logOut);
-
-    on<LoginWithGoogle>(_loginWithGoogle);
+  AuthBloc({required this.authRepository}) : super(AuthState.init()) {
+    on<CheckAuthenticationEvent>(_checkAuthentication);
+    on<LoginUserEvent>(_loginUser);
+    on<RegisterUserEvent>(_registerUser);
+    on<LogOutUserEvent>(_logOutUser);
+    on<SignInWithGoogleEvent>(_googleSignIn);
   }
 
-  _register(RegisterEvent event, emit) async {
-    if (event.userModel.userName.isEmpty) {
-      emit(AuthErrorState("Siz isimni kiritmadingiz"));
-      return;
-    } else if (event.userModel.email.isEmpty) {
-      emit(AuthErrorState("Siz emailni kiritmadingiz"));
-      return;
-    } else if (event.confirmPassword == '') {
-      emit(AuthErrorState("Parolni tasdiqlang"));
-      return;
-    }
-    try {
-      if (event.userModel.password == event.confirmPassword) {
-        emit(AuthLoadState(isLoad: true));
-        NetworkResponse networkResponse = await AuthRepository()
-            .signUp(event.userModel.email, event.userModel.password);
-        if (networkResponse.errorText == '') {
-          emit(AuthSuccessState(networkResponse.data));
-        } else {
-          emit(AuthErrorState(networkResponse.errorText.toString()));
-        }
-      } else {
-        emit(AuthErrorState("Sizning parolingiz mos kelmadi"));
-        return;
-      }
-    } catch (e) {
-      emit(AuthErrorState('$e'));
+  final AuthRepository authRepository;
+
+  _checkAuthentication(CheckAuthenticationEvent event, emit) async {
+    User? user = FirebaseAuth.instance.currentUser;
+
+    debugPrint("CURRENT USER:$user");
+    if (user == null) {
+      emit(state.copyWith(status: FormsStatus.unauthenticated));
+    } else {
+      emit(state.copyWith(status: FormsStatus.authenticated));
     }
   }
 
-  _login(LoginEvent event, emit) async {
-    try {
-      emit(AuthLoadState(isLoad: true));
-      NetworkResponse networkResponse =
-          await AuthRepository().signIn(event.email, event.password);
-      if (networkResponse.errorText.isEmpty) {
-        emit(AuthSuccessState(networkResponse.data));
-      } else {
-        emit(AuthErrorState(networkResponse.errorText.toString()));
-      }
-    } catch (e) {
-      emit(AuthErrorState('$e'));
+  _loginUser(LoginUserEvent event, emit) async {
+    emit(state.copyWith(status: FormsStatus.loading));
+    NetworkResponse networkResponse =
+        await authRepository.logInWithEmailAndPassword(
+      email: "${event.username.toLowerCase()}@gmail.com",
+      password: event.password,
+    );
+    if (networkResponse.errorText.isEmpty) {
+
+      UserCredential userCredential = networkResponse.data as UserCredential;
+
+      UserModel userModel = state.userModel.copyWith(authUid: userCredential.user!.uid);
+
+      emit(state.copyWith(status: FormsStatus.authenticated,userModel: userModel));
+    } else {
+      emit(
+        state.copyWith(
+          status: FormsStatus.error,
+          errorMessage: networkResponse.errorText,
+        ),
+      );
     }
   }
 
-  _loginWithGoogle(LoginWithGoogle event, emit) async {
-    try {
-      String? clientId;
-      emit(AuthLoadState(isLoad: true));
-      final GoogleSignInAccount? googleUser =
-          await GoogleSignIn(clientId: clientId).signIn();
-      final GoogleSignInAuthentication? googleAuth =
-          await googleUser?.authentication;
-      final credential = GoogleAuthProvider.credential(
-          accessToken: googleAuth?.accessToken, idToken: googleAuth?.idToken);
-      UserCredential userCredential =
-          await FirebaseAuth.instance.signInWithCredential(credential);
-      emit(AuthSuccessState(userCredential));
-    } catch (e) {
-      emit(AuthErrorState('$e'));
+  _registerUser(RegisterUserEvent event, emit) async {
+    emit(state.copyWith(status: FormsStatus.loading));
+    NetworkResponse networkResponse =
+        await authRepository.registerWithEmailAndPassword(
+      email: event.userModel.email,
+      password: event.userModel.password,
+    );
+    if (networkResponse.errorText.isEmpty) {
+      debugPrint("REGISTERED USER!!!");
+      UserCredential userCredential = networkResponse.data as UserCredential;
+      UserModel userModel = event.userModel.copyWith(
+        authUid: userCredential.user!.uid,
+      );
+      emit(
+        state.copyWith(
+          status: FormsStatus.authenticated,
+          statusMessage: "registered",
+          userModel: userModel,
+        ),
+      );
+    } else {
+      debugPrint("ERROR REGISTER USER!!! ${networkResponse.errorCode}");
+      emit(
+        state.copyWith(
+          status: FormsStatus.error,
+          errorMessage: networkResponse.errorText,
+        ),
+      );
     }
   }
 
-  _logOut(LogOutEvent event, emit) async {
-    await AuthRepository().logOut();
-    NetworkResponse networkResponse = NetworkResponse(data: UserCredential);
+  _logOutUser(LogOutUserEvent event, emit) async {
+    emit(state.copyWith(status: FormsStatus.loading));
+    NetworkResponse networkResponse = await authRepository.logOutUser();
+    if (networkResponse.errorText.isEmpty) {
+      emit(state.copyWith(status: FormsStatus.unauthenticated));
+    } else {
+      emit(
+        state.copyWith(
+          status: FormsStatus.error,
+          errorMessage: networkResponse.errorText,
+        ),
+      );
+    }
+  }
+
+  _googleSignIn(SignInWithGoogleEvent event, emit) async {
+    emit(state.copyWith(status: FormsStatus.loading));
+    NetworkResponse networkResponse = await authRepository.googleSignIn();
+    if (networkResponse.errorText.isEmpty) {
+      UserCredential userCredential = networkResponse.data;
+      emit(
+        state.copyWith(
+          statusMessage: "registered",
+          status: FormsStatus.authenticated,
+          userModel: UserModel(
+            fcm: "",
+            authUid: userCredential.user!.uid,
+            password: "",
+            email: userCredential.user!.email ?? "",
+            imageUrl: userCredential.user!.photoURL ?? "",
+            fullName: userCredential.user!.displayName ?? "",
+            phoneNumber: userCredential.user!.phoneNumber ?? "",
+            userId: "",
+            username: userCredential.user!.displayName ?? "",
+          ),
+        ),
+      );
+    } else {
+      emit(
+        state.copyWith(
+          status: FormsStatus.error,
+          errorMessage: networkResponse.errorText,
+        ),
+      );
+    }
   }
 }

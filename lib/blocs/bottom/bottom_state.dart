@@ -1,7 +1,7 @@
 class ChangeIndexState {
   final int index;
 
-  ChangeIndexState({required this.index});
+  ChangeIndexState({this.index = 0});
 
   ChangeIndexState copyWith({
     int? index,

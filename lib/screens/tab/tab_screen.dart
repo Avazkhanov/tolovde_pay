@@ -4,13 +4,10 @@ import 'package:tolovde_pay/blocs/bottom/bottom_bloc.dart';
 import 'package:tolovde_pay/blocs/bottom/bottom_event.dart';
 import 'package:tolovde_pay/blocs/bottom/bottom_state.dart';
 import 'package:tolovde_pay/blocs/transaction/transaction_bloc.dart';
-import 'package:tolovde_pay/blocs/user_bloc/user_bloc.dart';
-import 'package:tolovde_pay/blocs/user_bloc/user_event.dart';
-import 'package:tolovde_pay/screens/routes.dart';
 import 'package:tolovde_pay/screens/tab/card/card_screen.dart';
-import 'package:tolovde_pay/screens/tab/history/history_screen.dart';
 import 'package:tolovde_pay/screens/tab/home/home_screen.dart';
 import 'package:tolovde_pay/screens/tab/profile/profile_screen.dart';
+import 'package:tolovde_pay/screens/tab/transfer/transfer_screen.dart';
 
 class TabScreen extends StatefulWidget {
   const TabScreen({super.key});
@@ -20,21 +17,22 @@ class TabScreen extends StatefulWidget {
 }
 
 class _TabScreenState extends State<TabScreen> {
+  List<Widget> screens = [];
+
   @override
   void initState() {
-    debugPrint("Tab initga kirdi");
-    context.read<UserProfileBloc>().add(GetUserProfileByUuIdEvent());
+    context.read<TransactionBloc>().add(SetInitialEvent());
+    screens = [
+      const HomeScreen(),
+      const TransferScreen(),
+      const CardScreen(),
+      const ProfileSettingsScreen(),
+    ];
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
-    List<Widget> screens = [
-      const HomeScreen(),
-      const CardScreen(),
-      const HistoryScreen(),
-      const ProfileScreen(),
-    ];
     return Scaffold(
       body: BlocBuilder<BottomBloc, ChangeIndexState>(
         builder: (context, state) {
@@ -44,19 +42,9 @@ class _TabScreenState extends State<TabScreen> {
           );
         },
       ),
-      floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
-      floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          context.read<TransactionBloc>().add(SetInitialEvent());
-          Navigator.pushNamed(context, RouteNames.transferRoute);
-        },
-        shape: const CircleBorder(),
-        backgroundColor: Colors.blue,
-        child: const Icon(Icons.currency_exchange),
-      ),
       bottomNavigationBar: BlocBuilder<BottomBloc, ChangeIndexState>(
         builder: (context, state) {
-          return BottomNavigationBar(
+          return  BottomNavigationBar(
             selectedItemColor: Colors.black,
             currentIndex: state.index,
             onTap: (index) {
@@ -75,20 +63,20 @@ class _TabScreenState extends State<TabScreen> {
               ),
               BottomNavigationBarItem(
                 activeIcon: Icon(
-                  Icons.credit_card,
+                  Icons.currency_exchange_outlined,
                 ),
                 icon: Icon(
-                  Icons.credit_card,
+                  Icons.currency_exchange_outlined,
                   color: Colors.grey,
                 ),
-                label: 'Card',
+                label: 'Transfer',
               ),
               BottomNavigationBarItem(
                 activeIcon: Icon(
-                  Icons.history,
+                  Icons.credit_card,
                 ),
                 icon: Icon(
-                  Icons.history,
+                  Icons.credit_card,
                   color: Colors.grey,
                 ),
                 label: 'History',

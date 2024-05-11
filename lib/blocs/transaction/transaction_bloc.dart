@@ -2,11 +2,10 @@ import 'package:equatable/equatable.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:tolovde_pay/blocs/base/base_state.dart';
-import 'package:tolovde_pay/data/form_status/forms_status.dart';
 import 'package:tolovde_pay/data/models/card_model.dart';
-import 'package:tolovde_pay/data/network/response.dart';
-import 'package:tolovde_pay/data/repositories/card_repository.dart';
-
+import 'package:tolovde_pay/data/models/forms_status.dart';
+import 'package:tolovde_pay/data/models/network_response.dart';
+import 'package:tolovde_pay/data/repositories/cards_repository.dart';
 
 part 'transaction_event.dart';
 

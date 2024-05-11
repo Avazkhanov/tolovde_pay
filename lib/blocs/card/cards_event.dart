@@ -1,18 +1,16 @@
 import 'package:equatable/equatable.dart';
 import 'package:tolovde_pay/data/models/card_model.dart';
-import 'package:tolovde_pay/data/models/user_model.dart';
 
 abstract class CardsEvent extends Equatable {}
 
 class AddCardEvent extends CardsEvent {
   final CardModel cardModel;
-  final UserModel userModel;
-  final String color;
+  final String userId;
 
-  AddCardEvent(this.cardModel,this.userModel, this.color);
+  AddCardEvent(this.cardModel, this.userId);
 
   @override
-  List<Object?> get props => [cardModel,userModel,color];
+  List<Object?> get props => [cardModel,userId];
 }
 
 class UpdateCardEvent extends CardsEvent {
@@ -42,13 +40,14 @@ class GetCardsByUserId extends CardsEvent {
   List<Object?> get props => [userId];
 }
 
-class GetAllCards extends CardsEvent {
-  GetAllCards();
-
+class GetActiveCards extends CardsEvent {
   @override
   List<Object?> get props => [];
 }
-class GetActiveCards extends CardsEvent {
+
+class GetCardsDatabaseEvent extends CardsEvent {
+  GetCardsDatabaseEvent();
+
   @override
   List<Object?> get props => [];
 }

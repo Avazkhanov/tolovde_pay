@@ -1,42 +1,46 @@
 part of 'auth_bloc.dart';
 
-abstract class AuthState extends Equatable {}
+class AuthState extends Equatable {
+  final String errorMessage;
+  final String statusMessage;
+  final FormsStatus status;
+  final UserModel userModel;
 
-class AuthInitial extends AuthState {
+  const AuthState({
+    required this.status,
+    required this.errorMessage,
+    required this.statusMessage,
+    required this.userModel,
+  });
 
-  @override
-  List<Object> get props => [];
-}
-class AuthLoadState extends AuthState {
-  final bool isLoad;
+  AuthState copyWith({
+    String? errorMessage,
+    String? statusMessage,
+    FormsStatus? status,
+    UserModel? userModel,
+  }) {
+    return AuthState(
+      status: status ?? this.status,
+      statusMessage: statusMessage ?? this.statusMessage,
+      errorMessage: errorMessage ?? this.errorMessage,
+      userModel: userModel ?? this.userModel,
+    );
+  }
 
-   AuthLoadState({ this.isLoad = false});
-  @override
-  List<Object> get props => [
-    isLoad.hashCode,
-  ];
-}
-
-
-class AuthSuccessState extends AuthState{
-
-  final UserCredential? userCredential;
-
-  AuthSuccessState(this.userCredential);
+  factory AuthState.init() {
+    return AuthState(
+      status: FormsStatus.pure,
+      statusMessage: '',
+      errorMessage: '',
+      userModel: UserModel.initial(),
+    );
+  }
 
   @override
   List<Object?> get props => [
-    userCredential.hashCode
-  ];
-
-}
-
-class AuthErrorState extends AuthState {
-  final String errorText;
-  AuthErrorState(this.errorText);
-
-  @override
-  List<Object> get props => [
-    errorText.hashCode,
-  ];
+        status,
+        statusMessage,
+        errorMessage,
+        userModel,
+      ];
 }

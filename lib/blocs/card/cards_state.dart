@@ -1,5 +1,5 @@
 import 'package:equatable/equatable.dart';
-import 'package:tolovde_pay/data/form_status/forms_status.dart';
+import 'package:tolovde_pay/data/models/forms_status.dart';
 
 import '../../data/models/card_model.dart';
 
@@ -14,10 +14,10 @@ class CardsState extends Equatable {
   const CardsState({
     required this.status,
     required this.userCards,
-    required this.activeCards,
     required this.errorMessage,
     required this.statusMessage,
     required this.cardsDB,
+    required this.activeCards,
   });
 
   CardsState copyWith({
@@ -31,10 +31,10 @@ class CardsState extends Equatable {
     return CardsState(
       userCards: userCards ?? this.userCards,
       status: status ?? this.status,
-      activeCards: activeCards ?? this.activeCards,
       errorMessage: errorMessage ?? this.errorMessage,
       statusMessage: statusMessage ?? this.statusMessage,
       cardsDB: cardsDB ?? this.cardsDB,
+      activeCards: activeCards ?? this.activeCards,
     );
   }
 
@@ -43,8 +43,8 @@ class CardsState extends Equatable {
         status,
         userCards,
         errorMessage,
-        activeCards,
         statusMessage,
         cardsDB,
+        activeCards,
       ];
 }

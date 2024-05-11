@@ -1,10 +1,12 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:tolovde_pay/blocs/card/cards_event.dart';
 import 'package:tolovde_pay/blocs/card/cards_state.dart';
-import 'package:tolovde_pay/data/form_status/forms_status.dart';
 import 'package:tolovde_pay/data/models/card_model.dart';
-import 'package:tolovde_pay/data/network/response.dart';
-import 'package:tolovde_pay/data/repositories/card_repository.dart';
+import 'package:tolovde_pay/data/models/forms_status.dart';
+import 'package:tolovde_pay/data/models/network_response.dart';
+
+import '../../data/repositories/cards_repository.dart';
 
 
 class CardsBloc extends Bloc<CardsEvent, CardsState> {
@@ -23,7 +25,8 @@ class CardsBloc extends Bloc<CardsEvent, CardsState> {
     on<UpdateCardEvent>(_updateCard);
     on<DeleteCardEvent>(_deleteCard);
     on<GetCardsByUserId>(_listenCard);
-    on<GetAllCards>(_listenCardsDatabase);
+    on<GetActiveCards>(_listenActiveCard);
+    on<GetCardsDatabaseEvent>(_listenCardsDatabase);
   }
 
   final CardsRepository cardsRepository;
@@ -31,7 +34,7 @@ class CardsBloc extends Bloc<CardsEvent, CardsState> {
   _addCard(AddCardEvent event, emit) async {
     emit(state.copyWith(status: FormsStatus.loading));
 
-    NetworkResponse response = await cardsRepository.addCard(event.cardModel,event.userModel,event.color);
+    NetworkResponse response = await cardsRepository.addCard(event.cardModel,event.userId);
     if (response.errorText.isEmpty) {
       emit(
         state.copyWith(
@@ -86,14 +89,6 @@ class CardsBloc extends Bloc<CardsEvent, CardsState> {
     );
   }
 
-  _listenCardsDatabase(GetAllCards event, Emitter emit) async {
-    await emit.onEach(
-      cardsRepository.getAllCards(),
-      onData: (List<CardModel> db) {
-        emit(state.copyWith(cardsDB: db));
-      },
-    );
-  }
   _listenActiveCard(GetActiveCards event, Emitter emit) async {
     await emit.onEach(
       cardsRepository.getActiveCards(),
@@ -103,4 +98,14 @@ class CardsBloc extends Bloc<CardsEvent, CardsState> {
     );
   }
 
+  _listenCardsDatabase(GetCardsDatabaseEvent event, Emitter emit) async {
+    debugPrint("DATABASE CARDS");
+    await emit.onEach(
+      cardsRepository.getCardsDatabase(),
+      onData: (List<CardModel> db) {
+        debugPrint("DATABASE CARDS LENGTH${db.length}");
+        emit(state.copyWith(cardsDB: db));
+      },
+    );
+  }
 }

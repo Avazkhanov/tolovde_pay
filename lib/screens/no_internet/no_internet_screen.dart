@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:tolovde_pay/blocs/connectivity/connectivity_bloc.dart';
@@ -26,6 +25,7 @@ class _NoInternetScreenState extends State<NoInternetScreen> {
         debugPrint("ON POP INVOKED:$value");
       },
       child: Scaffold(
+
         backgroundColor: Colors.white,
         body: Column(
           children: [

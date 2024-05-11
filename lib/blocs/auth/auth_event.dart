@@ -1,46 +1,49 @@
 part of 'auth_bloc.dart';
 
- abstract class AuthEvent extends Equatable {}
-
-class RegisterEvent extends AuthEvent{
-
-  final UserModel userModel;
-  final String confirmPassword;
-  RegisterEvent(this.userModel, this.confirmPassword);
-
+abstract class AuthEvent extends Equatable {
   @override
-  List<Object?> get props => [
-    userModel.hashCode,
-    confirmPassword.hashCode
-  ];
+  List<Object?> get props => [];
 }
 
-class LoginEvent extends AuthEvent{
+class CheckAuthenticationEvent extends AuthEvent {
+  @override
+  List<Object?> get props => [];
+}
 
-  final String email;
+class LoginUserEvent extends AuthEvent {
+  final String username;
   final String password;
-  LoginEvent(this.email, this.password);
+
+  LoginUserEvent({
+    required this.password,
+    required this.username,
+  });
 
   @override
   List<Object?> get props => [
-    email.hashCode,
-    password.hashCode
-  ];
-
-
+        password,
+        username,
+      ];
 }
 
-class LoginWithGoogle extends AuthEvent{
+class RegisterUserEvent extends AuthEvent {
+  final UserModel userModel;
 
-
-   @override
-  List<Object?> get props => [];
-}
-
-class LogOutEvent extends AuthEvent{
+  RegisterUserEvent({required this.userModel});
 
   @override
+  List<Object?> get props => [
+        userModel,
+      ];
+}
+
+class LogOutUserEvent extends AuthEvent {
+  @override
   List<Object?> get props => [];
+}
 
 
+class SignInWithGoogleEvent extends AuthEvent {
+  @override
+  List<Object?> get props => [];
 }

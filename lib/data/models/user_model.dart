@@ -1,93 +1,97 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
-
 class UserModel {
-  final String userName;
-  final String lastName;
+  final String username;
+  final String fullName;
   final String password;
+  final String email;
   final String imageUrl;
   final String phoneNumber;
-  final String email;
   final String userId;
-  final String uuId;
+  final String authUid;
+  final String fcm;
 
-  UserModel(
-      {required this.imageUrl,
-        required this.email,
-        required this.userName,
-        required this.lastName,
-        required this.password,
-        required this.phoneNumber,
-        required this.uuId,
-        required this.userId});
+  UserModel({
+    required this.password,
+    required this.email,
+    required this.imageUrl,
+    required this.fullName,
+    required this.phoneNumber,
+    required this.userId,
+    required this.username,
+    required this.fcm,
+    required this.authUid,
+  });
 
   UserModel copyWith({
-    String? userName,
-    String? lastName,
+    String? username,
+    String? lastname,
     String? password,
+    String? email,
     String? imageUrl,
     String? phoneNumber,
-    String? email,
     String? userId,
-    String? uuId,
-  }) =>
-      UserModel(
-        userName: userName ?? this.userName,
-        lastName: lastName ?? this.lastName,
-        password: password ?? this.password,
-        imageUrl: imageUrl ?? this.imageUrl,
-        phoneNumber: phoneNumber ?? this.phoneNumber,
-        email: email ?? this.email,
-        userId: userId ?? this.userId,
-        uuId: uuId ?? this.uuId,
-      );
-
-  Map<String, dynamic> toJson() {
-    return {
-      'user_name': userName,
-      'last_name': lastName,
-      'password': password,
-      'image_url': imageUrl,
-      'phone_number': phoneNumber,
-      'email': email,
-      'user_id': userId,
-      'uu_id': uuId,
-    };
-  }
-
-  factory UserModel.fromJson(Map<String, dynamic> json) {
+    String? fcm,
+    String? authUid,
+  }) {
     return UserModel(
-      imageUrl: json['image_url'] as String? ?? "",
-      email: json['email'] as String? ?? "",
-      userName: json['user_name'] as String? ?? "",
-      lastName: json['last_name'] as String? ?? "",
-      password: json['password'] as String? ?? "",
-      phoneNumber: json['phone_number'] as String? ?? "",
-      userId: json['user_id'] as String? ?? "",
-      uuId: 'uu_id' as String? ?? "",
+      userId: userId ?? this.userId,
+      fullName: lastname ?? this.fullName,
+      username: username ?? this.username,
+      password: password ?? this.password,
+      email: email ?? this.email,
+      imageUrl: imageUrl ?? this.imageUrl,
+      phoneNumber: phoneNumber ?? this.phoneNumber,
+      fcm: fcm ?? this.fcm,
+      authUid: authUid ?? this.authUid,
     );
   }
 
-  static Map<String, dynamic> convertMap(DocumentSnapshot documentSnapshot) {
-    return {
-      "image_url": documentSnapshot["image_url"],
-      "email": documentSnapshot["email"],
-      "user_name": documentSnapshot["user_name"],
-      "last_name": documentSnapshot["last_name"],
-      "password": documentSnapshot["password"],
-      "phone_number": documentSnapshot["phone_number"],
-      "user_id": documentSnapshot["user_id"],
-      "uu_id": documentSnapshot["uu_id"]
-    };
+  Map<String, dynamic> toJson() => {
+        "userId": userId,
+        "lastname": fullName,
+        "username": username,
+        "email": email,
+        "password": password,
+        "imageUrl": imageUrl,
+        "phoneNumber": phoneNumber,
+        "fcm": fcm,
+        "authUid": authUid,
+      };
+
+
+  Map<String, dynamic> toJsonForUpdate() => {
+    "lastname": fullName,
+    "username": username,
+    "email": email,
+    "password": password,
+    "imageUrl": imageUrl,
+    "phoneNumber": phoneNumber,
+    "fcm": fcm,
+    "authUid": authUid,
+  };
+
+  factory UserModel.fromJson(Map<String, dynamic> json) {
+    return UserModel(
+      password: json["password"] as String? ?? "",
+      email: json["email"] as String? ?? "",
+      imageUrl: json["imageUrl"] as String? ?? "",
+      fullName: json["lastname"] as String? ?? "",
+      phoneNumber: json["phoneNumber"] as String? ?? "",
+      userId: json["userId"] as String? ?? "",
+      username: json["username"] as String? ?? "",
+      fcm: json["fcm"] as String? ?? "",
+      authUid: json["authUid"] as String? ?? "",
+    );
   }
 
   static UserModel initial() => UserModel(
-    imageUrl: "",
-    email: "",
-    userName: "",
-    lastName: "",
-    password: "",
-    phoneNumber: '',
-    userId: "",
-    uuId: '',
-  );
+        password: "",
+        email: "",
+        imageUrl: "",
+        fullName: "",
+        phoneNumber: "",
+        userId: "",
+        username: "",
+        fcm: "",
+    authUid: "",
+      );
 }

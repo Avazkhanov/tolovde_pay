@@ -1,5 +1,5 @@
 import 'package:equatable/equatable.dart';
-import 'package:tolovde_pay/data/form_status/forms_status.dart';
+import 'package:tolovde_pay/data/models/forms_status.dart';
 
 class BaseState extends Equatable {
   final FormsStatus status;
