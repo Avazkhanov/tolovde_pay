@@ -5,7 +5,8 @@ import 'package:tolovde_pay/data/models/network_response.dart';
 import 'package:tolovde_pay/utils/constants/app_constants.dart';
 
 class CardsRepository {
-  Future<NetworkResponse> addCard(CardModel cardModel,String userId) async {
+  Future<NetworkResponse> addCard(
+      CardModel cardModel, String userId, String cardHolder) async {
     try {
       DocumentReference documentReference = await FirebaseFirestore.instance
           .collection(AppConstants.cards)
@@ -13,7 +14,11 @@ class CardsRepository {
       await FirebaseFirestore.instance
           .collection(AppConstants.cards)
           .doc(documentReference.id)
-          .update({"cardId": documentReference.id,"userId" : userId});
+          .update({
+        "cardId": documentReference.id,
+        "userId": userId,
+        "cardHolder": cardHolder
+      });
 
       return NetworkResponse(data: "success");
     } on FirebaseException catch (error) {

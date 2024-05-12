@@ -29,10 +29,11 @@ class _TransferScreenState extends State<TransferScreen> {
   final FocusNode amountFocusNode = FocusNode();
 
   CardModel senderCard = CardModel.initial();
-  CardModel receiverCard = CardModel.initial();
+    CardModel receiverCard = CardModel.initial();
 
   @override
   void initState() {
+    print("initga Kirdi");
     _init();
     super.initState();
   }
@@ -43,12 +44,14 @@ class _TransferScreenState extends State<TransferScreen> {
     cardNumberController.addListener(
       () {
         String receiverCardNumber =
-            cardNumberController.text.replaceAll(" ", "");
-        if (receiverCardNumber.length == 16) {
+            cardNumberController.text;
+        if (receiverCardNumber.length == 19) {
           for (var element in cards) {
             if (element.cardNumber == receiverCardNumber &&
                 senderCard.cardNumber != receiverCardNumber) {
+
               receiverCard = element;
+              print("o'zlashtirildi");
 
               context
                   .read<TransactionBloc>()

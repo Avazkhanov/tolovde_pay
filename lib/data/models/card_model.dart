@@ -4,6 +4,7 @@ class CardModel {
   final String expireDate;
   final String userId;
   final int type;
+  final String fcmToken;
   final String cvc;
   final String icon;
   final double balance;
@@ -16,6 +17,7 @@ class CardModel {
     required this.icon,
     required this.balance,
     required this.cardHolder,
+    required this.fcmToken,
     required this.cardNumber,
     required this.cvc,
     required this.userId,
@@ -31,6 +33,7 @@ class CardModel {
     String? cardHolder,
     String? cardNumber,
     String? expireDate,
+    String? fcmToken,
     String? userId,
     int? type,
     String? cvc,
@@ -45,6 +48,7 @@ class CardModel {
       userId: userId ?? this.userId,
       cardHolder: cardHolder ?? this.cardHolder,
       expireDate: expireDate ?? this.expireDate,
+      fcmToken: fcmToken ?? this.fcmToken,
       type: type ?? this.type,
       cvc: cvc ?? this.cvc,
       balance: balance ?? this.balance,
@@ -64,6 +68,7 @@ class CardModel {
         "type": type,
         "cvc": cvc,
         "balance": balance,
+        "fcm": fcmToken,
         "icon": icon,
         "cardId": cardId,
         "cardNumber": cardNumber,
@@ -84,6 +89,7 @@ class CardModel {
       cardHolder: json["cardHolder"] as String? ?? "",
       expireDate: json["expireDate"] as String? ?? "",
       type: json["type"] as int? ?? 0,
+      fcmToken: json["fcm"] as String? ?? "",
       cvc: json["cvc"] as String? ?? "",
       balance: (json["balance"] as num? ?? 0).toDouble(),
       icon: json["icon"] as String? ?? "",
@@ -102,6 +108,7 @@ class CardModel {
         cardNumber: "",
         cvc: "",
         userId: "",
+        fcmToken: "",
         expireDate: "",
         type: -1,
         bank: "",

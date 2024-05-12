@@ -29,7 +29,6 @@ class _AddCardScreenState extends State<AddCardScreen> {
   final FocusNode expireDateFocusNode = FocusNode();
   CardModel cardModel = CardModel.initial();
 
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -85,11 +84,18 @@ class _AddCardScreenState extends State<AddCardScreen> {
                   }
 
                   if ((!isExist) && hasInDB) {
-                    context.read<CardsBloc>().add(AddCardEvent(cardModel,context.read<UserProfileBloc>().state.userModel.userId));
+                    context.read<CardsBloc>().add(AddCardEvent(
+                        cardModel,
+                        context.read<UserProfileBloc>().state.userModel.userId,
+                        context
+                            .read<UserProfileBloc>()
+                            .state
+                            .userModel
+                            .username));
                   } else {
                     showUniqueDialog(
                         errorMessage:
-                        "Karta allaqachon qo'shilgan yoki bazada mavjud emas!");
+                            "Karta allaqachon qo'shilgan yoki bazada mavjud emas!");
                   }
                 },
                 title: "Qo'shish",

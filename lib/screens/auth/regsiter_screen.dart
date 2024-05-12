@@ -10,10 +10,9 @@ import 'package:tolovde_pay/screens/dialogs/unical_dialog.dart';
 import 'package:tolovde_pay/screens/widgets/my_custom_button.dart';
 import 'package:tolovde_pay/screens/widgets/text_container.dart';
 import 'package:tolovde_pay/utils/colors/app_colors.dart';
-import 'package:tolovde_pay/utils/constants/app_constants.dart';
 import 'package:tolovde_pay/utils/images/app_images.dart';
 import 'package:tolovde_pay/utils/styles/app_text_style.dart';
-
+import 'package:tolovde_pay/utils/validates/app_validates.dart';
 
 class RegisterScreen extends StatefulWidget {
   const RegisterScreen({super.key});
@@ -82,7 +81,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                   controller: phoneController,
                 ),
                 TextFieldContainer(
-                  regExp: AppConstants.passwordRegExp,
+                  regExp: AppValidates.passwordRegExp,
                   errorText:
                       "Parolda 8 belgidan va 1 katta harfdan iborat bo'lishi kerak !",
                   isObscureText: true,
@@ -96,7 +95,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                   controller: passwordController1,
                 ),
                 TextFieldContainer(
-                  regExp: AppConstants.passwordRegExp,
+                  regExp: AppValidates.passwordRegExp,
                   errorText:
                       "Parolda 8 belgidan va 1 katta harfdan iborat bo'lishi kerak !",
                   isObscureText: true,
@@ -159,10 +158,10 @@ class _RegisterScreenState extends State<RegisterScreen> {
   }
 
   bool isValidRegisterCredentials() =>
-      AppConstants.passwordRegExp.hasMatch(passwordController1.text) &&
-      AppConstants.textRegExp.hasMatch(usernameController.text) &&
-      AppConstants.textRegExp.hasMatch(lastnameController.text) &&
-      AppConstants.phoneRegExp.hasMatch(phoneController.text) &&
+      AppValidates.passwordRegExp.hasMatch(passwordController1.text) &&
+      AppValidates.textRegExp.hasMatch(usernameController.text) &&
+      AppValidates.textRegExp.hasMatch(lastnameController.text) &&
+      AppValidates.phoneRegExp.hasMatch(phoneController.text) &&
       (passwordController1.text == passwordController2.text);
 
   @override

@@ -6,8 +6,9 @@ abstract class CardsEvent extends Equatable {}
 class AddCardEvent extends CardsEvent {
   final CardModel cardModel;
   final String userId;
+  final String cardHolder;
 
-  AddCardEvent(this.cardModel, this.userId);
+  AddCardEvent(this.cardModel, this.userId,this.cardHolder);
 
   @override
   List<Object?> get props => [cardModel,userId];

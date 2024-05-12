@@ -8,7 +8,6 @@ import 'package:tolovde_pay/data/models/network_response.dart';
 
 import '../../data/repositories/cards_repository.dart';
 
-
 class CardsBloc extends Bloc<CardsEvent, CardsState> {
   CardsBloc({required this.cardsRepository})
       : super(
@@ -34,7 +33,8 @@ class CardsBloc extends Bloc<CardsEvent, CardsState> {
   _addCard(AddCardEvent event, emit) async {
     emit(state.copyWith(status: FormsStatus.loading));
 
-    NetworkResponse response = await cardsRepository.addCard(event.cardModel,event.userId);
+    NetworkResponse response = await cardsRepository.addCard(
+        event.cardModel, event.userId, event.cardHolder);
     if (response.errorText.isEmpty) {
       emit(
         state.copyWith(

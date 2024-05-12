@@ -9,9 +9,9 @@ import 'package:tolovde_pay/screens/dialogs/unical_dialog.dart';
 import 'package:tolovde_pay/screens/widgets/my_custom_button.dart';
 import 'package:tolovde_pay/screens/widgets/text_container.dart';
 import 'package:tolovde_pay/utils/colors/app_colors.dart';
-import 'package:tolovde_pay/utils/constants/app_constants.dart';
 import 'package:tolovde_pay/utils/images/app_images.dart';
 import 'package:tolovde_pay/utils/styles/app_text_style.dart';
+import 'package:tolovde_pay/utils/validates/app_validates.dart';
 
 
 class ProfileEditScreen extends StatefulWidget {
@@ -136,8 +136,8 @@ class _ProfileEditScreenState extends State<ProfileEditScreen> {
   }
 
   bool isValidInputs() =>
-      AppConstants.textRegExp.hasMatch(fullNameController.text) &&
-      AppConstants.phoneRegExp.hasMatch(phoneController.text);
+      AppValidates.textRegExp.hasMatch(fullNameController.text) &&
+          AppValidates.phoneRegExp.hasMatch(phoneController.text);
 
   @override
   void dispose() {

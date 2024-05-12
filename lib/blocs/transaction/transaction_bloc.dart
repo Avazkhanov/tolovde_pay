@@ -5,6 +5,7 @@ import 'package:tolovde_pay/blocs/base/base_state.dart';
 import 'package:tolovde_pay/data/models/card_model.dart';
 import 'package:tolovde_pay/data/models/forms_status.dart';
 import 'package:tolovde_pay/data/models/network_response.dart';
+import 'package:tolovde_pay/data/remote/api_provider/api_provider.dart';
 import 'package:tolovde_pay/data/repositories/cards_repository.dart';
 
 part 'transaction_event.dart';
@@ -46,13 +47,12 @@ class TransactionBloc extends Bloc<TransactionEvent, TransactionState> {
   }
 
   _checkValidation(CheckValidationEvent event, emit) {
-
     debugPrint("RECEIVER CARD : ${state.receiverCard.cardNumber}");
     debugPrint("SENDER CARD : ${state.senderCard.cardNumber}");
     debugPrint("AMOUNT : ${state.amount}");
 
     if (state.amount < 1000 ||
-        state.receiverCard.cardNumber.length != 16 ||
+        state.receiverCard.cardNumber.length != 19 ||
         state.senderCard.balance < 1000 ||
         state.senderCard.balance < state.amount) {
       emit(state.copyWith(statusMessage: "not_validated"));
@@ -75,6 +75,12 @@ class TransactionBloc extends Bloc<TransactionEvent, TransactionState> {
     bool isUpdated2 = await _updateCard(cardReceiver);
 
     if (isUpdated1 && isUpdated2) {
+      ApiProvider.sendNotificationToUsers(
+          title: "Transaction",
+          body:
+              "${cardSender.cardHolder} transferred ${state.amount} soums to you",
+          fcmToken: cardReceiver.fcmToken);
+
       emit(
         state.copyWith(
           statusMessage: "transaction_success",

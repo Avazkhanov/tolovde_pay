@@ -36,10 +36,7 @@ class _TabScreenState extends State<TabScreen> {
     return Scaffold(
       body: BlocBuilder<BottomBloc, ChangeIndexState>(
         builder: (context, state) {
-          return IndexedStack(
-            index: state.index,
-            children: screens,
-          );
+          return screens[state.index];
         },
       ),
       bottomNavigationBar: BlocBuilder<BottomBloc, ChangeIndexState>(

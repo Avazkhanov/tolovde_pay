@@ -10,9 +10,9 @@ import 'package:tolovde_pay/screens/routes.dart';
 import 'package:tolovde_pay/screens/widgets/my_custom_button.dart';
 import 'package:tolovde_pay/screens/widgets/text_container.dart';
 import 'package:tolovde_pay/utils/colors/app_colors.dart';
-import 'package:tolovde_pay/utils/constants/app_constants.dart';
 import 'package:tolovde_pay/utils/images/app_images.dart';
 import 'package:tolovde_pay/utils/styles/app_text_style.dart';
+import 'package:tolovde_pay/utils/validates/app_validates.dart';
 
 class AuthScreen extends StatefulWidget {
   const AuthScreen({super.key});
@@ -26,8 +26,8 @@ class _AuthScreenState extends State<AuthScreen> {
   final TextEditingController usernameController = TextEditingController();
 
   bool isValidLoginCredentials() =>
-      AppConstants.passwordRegExp.hasMatch(passwordController.text) &&
-      AppConstants.textRegExp.hasMatch(usernameController.text);
+      AppValidates.passwordRegExp.hasMatch(passwordController.text) &&
+      AppValidates.textRegExp.hasMatch(usernameController.text);
 
   @override
   Widget build(BuildContext context) {
@@ -66,7 +66,7 @@ class _AuthScreenState extends State<AuthScreen> {
                           onChanged: (v) {
                             setState(() {});
                           },
-                          regExp: AppConstants.textRegExp,
+                          regExp: AppValidates.textRegExp,
                           errorText: "Username not supported",
                           prefixIcon: Padding(
                             padding: EdgeInsets.symmetric(vertical: 10.h),
@@ -81,7 +81,7 @@ class _AuthScreenState extends State<AuthScreen> {
                             setState(() {});
                           },
                           isObscureText: true,
-                          regExp: AppConstants.passwordRegExp,
+                          regExp: AppValidates.passwordRegExp,
                           errorText:
                               "Parolda 8 belgidan va 1 katta harfdan iborat bo'lishi kerak !",
                           prefixIcon: Padding(
@@ -130,8 +130,8 @@ class _AuthScreenState extends State<AuthScreen> {
                               SizedBox(height: 20.h),
                               IconButton(
                                 style: const ButtonStyle(
-                                    backgroundColor: MaterialStatePropertyAll(
-                                        Colors.white)),
+                                    backgroundColor:
+                                        MaterialStatePropertyAll(Colors.white)),
                                 onPressed: () {
                                   context
                                       .read<AuthBloc>()
